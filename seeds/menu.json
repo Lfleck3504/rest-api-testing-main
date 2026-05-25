@@ -1,16 +1,12 @@
-const fs = require("fs");
-const path = require("path");
-
-exports.seed = async function(knex) {
-  const filePath = path.join(__dirname, "menu.json");
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const menuData = JSON.parse(fileContents);
-
-  await knex("molloyeats.menu").del();
-
-  return knex("molloyeats.menu")
-    .insert(menuData)
-    .catch(function(error) {
-      console.log(error);
-    });
-};
+[
+  {
+    "name": "Fruit Cup - Pineapple",
+    "price": 3.95,
+    "description": "12oz Cup"
+  },
+  {
+    "name": "Powerade Fruit Punch",
+    "price": 2.75,
+    "description": null
+  }
+]

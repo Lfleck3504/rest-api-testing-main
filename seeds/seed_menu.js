@@ -1,13 +1,16 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> } 
- */
+const fs = require("fs");
+const path = require("path");
+
 exports.seed = async function(knex) {
-  // Deletes ALL existing entries
-  await knex('table_name').del()
-  await knex('table_name').insert([
-    {id: 1, colName: 'rowValue1'},
-    {id: 2, colName: 'rowValue2'},
-    {id: 3, colName: 'rowValue3'}
-  ]);
+  const filePath = path.join(__dirname, "menu.json");
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const menuData = JSON.parse(fileContents);
+
+  await knex("molloyeats.menu").del();
+
+  return knex("molloyeats.menu")
+    .insert(menuData)
+    .catch(function(error) {
+      console.log(error);
+    });
 };
