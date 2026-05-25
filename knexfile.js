@@ -6,10 +6,8 @@
 module.exports = {
 
   development: {
-    client: 'cockroachdb',
-    connection: {
-      filename: './dev.cockroachdb'
-    }
+    client: 'pg',
+    connection: process.env.DATABASE_URL
   },
 
   staging: {
