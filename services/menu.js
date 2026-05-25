@@ -28,6 +28,15 @@ class MenuServices {
     .delete()
     .whereRaw("LOWER(name) = LOWER(?)", [name]);
 }
+async updateItem(name, price, description) {
+  return await Menu.query()
+    .patch({
+      name: name,
+      price: price,
+      description: description
+    })
+    .whereRaw("LOWER(name) = LOWER(?)", [name]);
+}
 }
 
 module.exports = new MenuServices();

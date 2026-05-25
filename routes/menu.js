@@ -46,5 +46,20 @@ module.exports = [
   handler: function(request, h) {
     return menuController.removeItem(request);
   }
+},{
+  method: "PUT",
+  path: "/menu/update",
+  options: {
+    validate: {
+      payload: Joi.object({
+        name: Joi.string().required(),
+        price: Joi.number().required(),
+        description: Joi.string().optional().allow(null, "")
+      })
+    }
+  },
+  handler: function(request, h) {
+    return menuController.updateItem(request);
+  }
 }
 ];

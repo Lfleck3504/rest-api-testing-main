@@ -49,6 +49,27 @@ class MenuController {
     });
   }
 }
+async updateItem(request) {
+  const { name, price, description } = request.payload;
+
+  try {
+    const result = await menuService.updateItem(name, price, description);
+
+    if (result > 0) {
+      return JSON.stringify({
+        message: `${result} row(s) updated.`
+      });
+    }
+
+    return JSON.stringify({
+      error: "A menu item with that name does not exist."
+    });
+  } catch (error) {
+    return JSON.stringify({
+      error: error.message
+    });
+  }
+}
 }
 
 module.exports = new MenuController();
