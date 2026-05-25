@@ -1,12 +1,1 @@
-[
-  {
-    "name": "Fruit Cup - Pineapple",
-    "price": 3.95,
-    "description": "12oz Cup"
-  },
-  {
-    "name": "Powerade Fruit Punch",
-    "price": 2.75,
-    "description": null
-  }
-]
+[{"name":"Fruit Cup - Pineapple","price":"3.95","description":"12oz Cup"},{"name":"Fruit Cup - Strawberries","price":"4.95","description":"12oz Cup"},{"name":"Fruit Cup - Watermelon","price":"3.95","description":"12oz Cup"},{"name":"Powerade Fruit Punch","price":"2.75","description":null},{"name":"Arizona Fruit Snack - Green Tea","price":"2.99","description":null},{"name":"Hand Fruit - Orange","price":"1.30","description":null},{"name":"Hand Fruit - Red Apple","price":"1.30","description":null}]
