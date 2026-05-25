@@ -1,38 +1,31 @@
-const menuService = require("../services/menu");
+const Menu = require("../models/menu");
 
-class MenuController {
-  async getMenu(request) {
-    const name = request.query.name;
-
-    const result = await menuService.getMenu(name);
-
-    return JSON.stringify(result);
+class MenuServices {
+  async getMenu(name = "") {
+    return await Menu.query()
+      .select("name", "price", "description")
+      .where("name", "ilike", `%${name}%`)
+      .orWhere("description", "ilike", `%${name}%`);
   }
 
-  async addItem(request) {
-    const { name, price, description } = request.payload;
+  async addItem(name, price, description) {
+    const existingItem = await Menu.query()
+      .whereRaw("LOWER(name) = LOWER(?)", [name])
+      .first();
 
-    try {
-      const result = await menuService.addItem(name, price, description);
-
-      if (result !== false) {
-        return JSON.stringify(result);
-      }
-
-      return JSON.stringify({
-        error: "There is already a menu item with that name."
-      });
-    } catch (error) {
-      return JSON.stringify({
-        error: error.message
+    if (!existingItem) {
+      return await Menu.query().insert({
+        name: name,
+        price: price,
+        description: description
       });
     }
+
+    return false;
   }
 }
 
-module.exports = new MenuController();
-
-
+module.exports = new MenuServices();
 
 
 

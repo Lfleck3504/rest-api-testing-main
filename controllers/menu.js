@@ -1,36 +1,33 @@
-const Joi = require("@hapi/joi");
-const menuController = require("../controllers/menu");
+const menuService = require("../services/menu");
 
-module.exports = [
-  {
-    method: "GET",
-    path: "/menu",
-    options: {
-      validate: {
-        query: Joi.object({
-          name: Joi.string().optional()
-        })
-      }
-    },
-    handler: function(request, h) {
-      return menuController.getMenu(request);
-    }
-  },
+class MenuController {
+  async getMenu(request) {
+    const name = request.query.name;
 
-  {
-    method: "POST",
-    path: "/menu/add",
-    options: {
-      validate: {
-        payload: Joi.object({
-          name: Joi.string().required(),
-          price: Joi.number().required(),
-          description: Joi.string().optional().allow(null, "")
-        })
+    const result = await menuService.getMenu(name);
+
+    return JSON.stringify(result);
+  }
+
+  async addItem(request) {
+    const { name, price, description } = request.payload;
+
+    try {
+      const result = await menuService.addItem(name, price, description);
+
+      if (result !== false) {
+        return JSON.stringify(result);
       }
-    },
-    handler: function(request, h) {
-      return menuController.addItem(request);
+
+      return JSON.stringify({
+        error: "There is already a menu item with that name."
+      });
+    } catch (error) {
+      return JSON.stringify({
+        error: error.message
+      });
     }
   }
-];
+}
+
+module.exports = new MenuController();
