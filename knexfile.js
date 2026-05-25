@@ -5,11 +5,11 @@
  */
 module.exports = {
 
-  development: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL
-  },
-
+development: {
+  client: 'pg',
+  version: '7.2',
+  connection: process.env.DATABASE_URL
+},
   staging: {
     client: 'postgresql',
     connection: {
