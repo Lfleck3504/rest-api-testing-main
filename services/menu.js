@@ -23,14 +23,14 @@ class MenuController {
         error: "There is already a menu item with that name."
       });
     } catch (error) {
-      return JSON.stringify(error);
+      return JSON.stringify({
+        error: error.message
+      });
     }
   }
 }
 
 module.exports = new MenuController();
-
-
 
 
 
