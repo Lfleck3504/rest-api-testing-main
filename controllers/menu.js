@@ -1,13 +1,36 @@
-const menuService = require("../services/menu");
+const Joi = require("@hapi/joi");
+const menuController = require("../controllers/menu");
 
-class MenuController {
-  async getMenu(request) {
-    const name = request.query.name;
+module.exports = [
+  {
+    method: "GET",
+    path: "/menu",
+    options: {
+      validate: {
+        query: Joi.object({
+          name: Joi.string().optional()
+        })
+      }
+    },
+    handler: function(request, h) {
+      return menuController.getMenu(request);
+    }
+  },
 
-    const result = await menuService.getMenu(name);
-
-    return JSON.stringify(result);
+  {
+    method: "POST",
+    path: "/menu/add",
+    options: {
+      validate: {
+        payload: Joi.object({
+          name: Joi.string().required(),
+          price: Joi.number().required(),
+          description: Joi.string().optional().allow(null, "")
+        })
+      }
+    },
+    handler: function(request, h) {
+      return menuController.addItem(request);
+    }
   }
-}
-
-module.exports = new MenuController();
+];
