@@ -32,5 +32,19 @@ module.exports = [
     handler: function(request, h) {
       return menuController.addItem(request);
     }
+  },
+  {
+  method: "DELETE",
+  path: "/menu/remove",
+  options: {
+    validate: {
+      payload: Joi.object({
+        name: Joi.string().required()
+      })
+    }
+  },
+  handler: function(request, h) {
+    return menuController.removeItem(request);
   }
+}
 ];

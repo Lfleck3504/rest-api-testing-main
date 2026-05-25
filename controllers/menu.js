@@ -28,6 +28,27 @@ class MenuController {
       });
     }
   }
+  async removeItem(request) {
+  const { name } = request.payload;
+
+  try {
+    const result = await menuService.removeItem(name);
+
+    if (result > 0) {
+      return JSON.stringify({
+        message: `${result} row(s) removed.`
+      });
+    }
+
+    return JSON.stringify({
+      error: "A menu item with that name does not exist."
+    });
+  } catch (error) {
+    return JSON.stringify({
+      error: error.message
+    });
+  }
+}
 }
 
 module.exports = new MenuController();

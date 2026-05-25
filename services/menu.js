@@ -23,6 +23,11 @@ class MenuServices {
 
     return false;
   }
+  async removeItem(name) {
+  return await Menu.query()
+    .delete()
+    .whereRaw("LOWER(name) = LOWER(?)", [name]);
+}
 }
 
 module.exports = new MenuServices();
